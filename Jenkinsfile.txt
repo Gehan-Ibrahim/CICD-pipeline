@@ -2,7 +2,7 @@ node{
     
     stage('Git Checkout'){
         
-        git 'https://github.com/OmarHeshamGaballa/DevOps-CICD-Pipeline.git'
+        git 'https://github.com/gehan-ibrahim/DevOps-CICD-Pipeline.git'
     }
     
     stage('Sending files to Ansible via SSH'){
@@ -20,16 +20,16 @@ node{
     stage('Docker Image Tagging '){
         sshagent(['ansibledemo']) {
              sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  cd /home/ubuntu'
-             sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image tag $JOB_NAME:v1.$BUILD_ID  omargaballa/$JOB_NAME:v1.$BUILD_ID'
-             sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image tag $JOB_NAME:v1.$BUILD_ID omargaballa/$JOB_NAME:latest'
+             sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image tag $JOB_NAME:v1.$BUILD_ID  gehan-ibrahim/$JOB_NAME:v1.$BUILD_ID'
+             sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image tag $JOB_NAME:v1.$BUILD_ID gehan-ibrahim/$JOB_NAME:latest'
         }
     }
     stage('Push Docker Image to Dockerhub'){
         sshagent(['ansibledemo']) {
             withCredentials([string(credentialsId: 'dockerhub_passwd', variable: 'dockerhub_passwd')]) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker login -u omargaballa -p ${dockerhub_passwd}"
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image push omargaballa/$JOB_NAME:v1.$BUILD_ID '
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image push omargaballa/$JOB_NAME:latest '
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker login -u gehan-ibrahim -p ${dockerhub_passwd}"
+                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image push gehan-ibrahim/$JOB_NAME:v1.$BUILD_ID '
+                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.237.141.35  docker image push gehan-ibrahim/$JOB_NAME:latest '
              }
         }    
     }
