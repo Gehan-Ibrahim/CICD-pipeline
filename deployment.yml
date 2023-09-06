@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: web-container
-        image: gehan/demo-pipeline:latest
+        image: gehan-ibrahim/demo-pipeline:latest
         imagePullPolicy: Always
         resources:
           requests:
